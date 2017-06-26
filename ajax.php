@@ -30,7 +30,7 @@ if($action == "timestamp") {
 	
 	echo json_encode(array('success' => 1, 'posts' => $posts));
 } else if($action == "addpost") {
-	$id = ses_getId();
+	$id = getPost('user');
 	$rawtext = getPost('text');
 	$text = htmlentities($rawtext, ENT_HTML5);
 	

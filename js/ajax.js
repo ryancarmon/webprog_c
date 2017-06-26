@@ -2,16 +2,40 @@
 	Asynchrones updaten der Posts
 */
 var lastTimestamp = 0;
+var req;
+var posts;
 
-window.onload = function () {
-	var Timestamp = <?php echo ajax.php?action=timestamp; ?>;
-	lastTimestamp = Timestamp.time;
+function checkPosts() {
+	//Abfrage AJAX ajax.php?action=timestamp
+	//Vergleich mit lastTimestamp
+	//lastTimestamp größer => noop
+	//lastTimestamp kleiner => ajax.php?action=posts
+	//einfügen neuester posts oben
+	//last timestamp aktualisieren
+	
+	var req = XMLHttpRequest();
+	req.open("POST", "ajax.php?action=timestamp", true);
+	req.onreadystatechange = () => {
+		if(req.readyState === 4) {
+			if(req.status === 200) {
+				var data = JSON.parse(req.response);
+				
+				if(data.success ) {
+					if(data.timestamp > lastTimestamp) {
+						refreshPosts();
+					}
+				}	
+			}
+		}
+	}
 }
 
-function refeshPosts()
+
+
+function refreshPosts()
 {
 	try {
-		var req = new XMLHttpRequest();
+		req = new XMLHttpRequest();
 	}
 	catch (e) {
 		req = null;
@@ -19,13 +43,15 @@ function refeshPosts()
 	
 	if(req !== null)
 	{
-		req.open("POST", "http://ryan-carmon.de/wp_c/ajax.php?action=posts", true);
+		req.open("POST", "ajax.php?action=posts", true);
 	}
 
 	req.onreadystatechange = () => {
-		if(req.readyState === 4 && req.status ==== 200)
-		{
-			let posts = JSON.parse(req.response);
+		if(req.readyState === 4) {
+			if(req.status === 200) {
+			posts = JSON.parse(req.response);
+			
+			alert(posts);
 			
 			for(i = 0; i< posts.length;i++)
 			{	
@@ -34,8 +60,11 @@ function refeshPosts()
 					
 				}
 			}
+			}
 		}
 	}
+	
+	req.send();
 }
 
-setInterval(refeshPosts, 10000);
+//setInterval(refeshPosts, 10000);

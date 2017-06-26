@@ -40,6 +40,13 @@ function postValid()
 	}
 }
 
+function checkAndPost() {
+	if(postValid()) {
+		//ajax stuff here
+		closeModal();
+	}
+}
+
 function likeClick(id) {
 	document.location.href = 'index.php?action=like&pid='+id;
 }

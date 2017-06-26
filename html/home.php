@@ -12,6 +12,9 @@
 	<script type='text/javascript' language='javascript' src="js/ajax.js"></script>
   </head>
   <body>
+	<script type='text/javascript'>
+		lastTimestamp = <?php echo $db->getMaxPosttime(); ?>;
+	</script>
   
 	<nav>
 		<ul>
@@ -34,11 +37,11 @@
 				<h2>Beitrag verfassen</h2>
 			</section>
 			<section class="modal-body">
-				<form onsubmit="return postValid()" method="POST">
+				<!-- <form onsubmit="return postValid()" method="POST"> -->
 					<input type="hidden" name="action" value="post">
 					<textarea id="postText" name="text" placeholder="..."></textarea>
-					<input id="postBtn" class="button" type="Submit" value="Posten">
-				</form>
+					<input id="postBtn" class="button" type="Submit" value="Posten" onclick="checkAndPost()">
+				<!-- </form> -->
 			</section>
 		</div>
 	</dialog>
