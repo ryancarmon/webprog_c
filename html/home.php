@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/home.css">
 	<link rel="stylesheet" type="text/css" href="css/scheme.css">
 	<script type='text/javascript' language='javascript' src="js/post.js"></script>
+	<script type='text/javascript' language='javascript' src="js/ajax.js"></script>
   </head>
   <body>
   
