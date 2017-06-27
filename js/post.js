@@ -19,7 +19,7 @@ function postValid()
 {
 	var text = document.getElementById("postText");
 	
-	if(text.value == "")
+	if(text.value === "")
 	{
 		alert("Es wurde kein Text eingegeben!");
 		text.style.borderColor = "red";
@@ -40,10 +40,48 @@ function postValid()
 	}
 }
 
-function checkAndPost() {
-	if(postValid()) {
-		//ajax stuff here
-		closeModal();
+function checkAndSavePost() 
+{	
+	if(postValid()) 
+	{
+		var postText = document.getElementById("postText");
+		var reqText = "text=" + postText.value;
+		
+		try{
+			var req = new XMLHttpRequest();
+		}
+		catch(e){
+			req = null;
+		}
+		
+		if(req !== null)
+		{	
+			req.open("POST", "ajax.php?action=addpost", true);
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			req.send(reqText);
+		}
+		
+		req.onreadystatechange = () => {
+			if(req.readyState === 4)
+			{
+				if(req.status === 200)
+				{	
+					var returnReq = JSON.parse(req.response);
+					
+					
+					if(returnReq.success === 1)
+					{
+						refreshPosts();
+						closeModal(); 					
+					}
+					else
+					{
+						alert("Post könnte nicht gespeichert werden!");
+						closeModal();
+					}
+				}
+			}
+		}
 	}
 }
 

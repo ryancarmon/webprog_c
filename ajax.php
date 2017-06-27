@@ -19,11 +19,15 @@ if($action == "timestamp") {
 	
 	echo json_encode(array('success' => 1, 'time' => $time));
 } else if($action == "posts") {
-	$postdata = $db->getPosts();
+	$postdata = $db->getPosts(true);
 	$posts = array();
 	
 	foreach($postdata as $post) {	
-		$posts[] = array('user' => $post['User'], 'image' => $post['Image'], 'time' => $post['Timestamp'], 'text' => $post['Text']);
+		$pid = $post['PID'];
+		$isLiked = $db->isLiked(ses_getId(), $pid);
+		$likes = $db->getLikes($pid);
+	
+		$posts[] = array('user' => $post['User'], 'image' => $post['Image'], 'time' => $post['Timestamp'], 'text' => $post['Text'], 'pid' => $pid, 'isLiked' => $isLiked, 'likes' => $likes);
 	}
 	
 	$output = array('success' => 1, 'posts' => $posts);

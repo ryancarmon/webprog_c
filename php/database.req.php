@@ -64,19 +64,18 @@ class DatabaseWrapper {
 		$stmt->bindParam(':time', $time);
 		$stmt->bindParam(':text', $text);
 		$result = $stmt->execute();
-		echo print_r($this->dbo->errorInfo());
 		
 		return $result;
 	}
 	
 	/* Liefert ein Feld mit allen verfügbaren Posts zurück */
-	public function getPosts() {
+	public function getPosts($asc = false) {
 		$prepString = '
 			SELECT p.ID AS PID, u.ID AS UID, u.Username AS User, u.Image AS Image, p.Timestamp as Timestamp, p.Text as Text 
 			FROM posts p 
 				INNER JOIN users u 
 					ON p.User = u.ID
-			ORDER BY p.Timestamp DESC';
+			ORDER BY p.Timestamp '.(($asc)?'ASC':'DESC');
 				
 		$stmt = $this->dbo->prepare($prepString);	
 		$stmt->execute();
