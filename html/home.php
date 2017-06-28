@@ -37,11 +37,9 @@
 				<h2>Beitrag verfassen</h2>
 			</section>
 			<section class="modal-body">
-				<!-- <form onsubmit="return postValid()" method="POST">	rauswerfen? -->				
-					<input type="hidden" name="action" value="post">
-					<textarea id="postText" name="text" placeholder="..."></textarea>
-					<input id="postBtn" class="button" type="Submit" value="Posten" onclick="checkAndSavePost()">
-				<!-- </form> rauswerfen?	-->
+				<input type="hidden" name="action" value="post">
+				<textarea id="postText" name="text" placeholder="..."></textarea>
+				<input id="postBtn" class="button" type="Submit" value="Posten" onclick="checkAndSavePost()">
 			</section>
 		</div>
 	</dialog>

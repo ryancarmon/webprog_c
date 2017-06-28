@@ -28,7 +28,7 @@ function createHtmlPostElement(post)
 	// figcaption Content
 	postHeadline.appendChild(document.createTextNode(post.user));	
 	figcaption.appendChild(postHeadline);
-	figcaption.appendChild(document.createTextNode(post.time));
+	figcaption.appendChild(document.createTextNode(getTime(post.time)));
 		
 	figure.appendChild(img);
 	figure.appendChild(figcaption);
@@ -113,6 +113,30 @@ function checkPosts()
 	}
 }
 
+function getTime(timestamp){
+  var a = new Date(timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = a.getMonth();
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var time = ' ' + zeroFill(date, 2) + '.' + zeroFill(month, 2) + '.' + year + ' ' + zeroFill(hour, 2) + ':' + zeroFill(min, 2);
+  return time;
+}
+
+function zeroFill(number, width )
+{
+  width -= number.toString().length;
+  if ( width > 0 )
+  {
+    return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+  }
+  return number + "";
+}
+
+
+
 function refreshPosts()
 {
 	try {
@@ -159,4 +183,4 @@ function refreshPosts()
 	}
 }
 	
-setInterval(checkPosts, 10000);
+setInterval(checkPosts, 5000);
